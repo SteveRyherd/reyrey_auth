@@ -71,14 +71,14 @@ def check_token_validity(token, token_name='DRT'):
 # Token Management Functions
 # ------------------------------------------------------
 
-def get_token(token_name='DRT', providers=None, use_playwright_if_missing=False, check_token=True):
+def get_token(token_name='DRT', providers=None, use_playwright_on_failure=False, check_token=True):
     """
     Get an authentication token from the configured providers
     
     Args:
         token_name: Name of the token to retrieve
         providers: List of provider names to try (default: all registered providers)
-        use_playwright_if_missing: Whether to use Playwright to get a token if none found
+        use_playwright_on_failure: Whether to use Playwright to get a token if none found or all are invalid
         check_token: Whether to verify token validity before returning
         
     Returns:
@@ -102,7 +102,7 @@ def get_token(token_name='DRT', providers=None, use_playwright_if_missing=False,
                 return token
     
     # If no token found and Playwright fallback is enabled
-    if use_playwright_if_missing:
+    if use_playwright_on_failure:
         logger.info("No valid token found, attempting to get new token via Playwright")
         try:
             # Create a new event loop for this specific function
@@ -470,7 +470,7 @@ def get_auth_headers(token_name='DRT', check_token=True):
     Returns:
         dict: Headers with authentication token
     """
-    token = get_token(token_name=token_name, use_playwright_if_missing=True, check_token=check_token)
+    token = get_token(token_name=token_name, use_playwright_on_failure=True, check_token=check_token)
     
     if not token:
         logger.error("Failed to get authentication token")
