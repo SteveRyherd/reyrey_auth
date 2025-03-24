@@ -27,6 +27,9 @@ from .auth import (
 # Import utils
 from .utils import logger
 
+# Import CLI module
+from . import cli
+
 # Package metadata
 __version__ = "0.1.0"
 
@@ -51,4 +54,7 @@ __all__ = [
     
     # Utils
     "logger"
+
+    # CLI
+    "cli",
 ]

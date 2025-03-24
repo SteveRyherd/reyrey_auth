@@ -11,6 +11,11 @@ setup(
         "requests",
         "sqlalchemy",  # For database provider
     ],
+    entry_points={
+        "console_scripts": [
+            "reyrey_auth=reyrey_auth.cli:main",
+        ],
+    },
     python_requires=">=3.7",
     author="Your Name",
     author_email="your.email@example.com",
